@@ -1,0 +1,14 @@
+---
+- hosts: core-n01
+  sudo: true
+  vars_files:
+    - vaults/rackspace.yml
+  roles:
+    - role: bigspoonlabs.unit
+      name: registry.service
+    - role: bigspoonlabs.unit
+      name: mnt-music.mount
+    - role: bigspoonlabs.unit
+      name: mnt-video.mount
+    - role: bigspoonlabs.unit
+      name: plex.service

@@ -1,0 +1,5 @@
+---
+- name: reload systemd
+  shell: /usr/bin/systemctl daemon-reload
+- name: restart service
+  shell: /usr/bin/systemctl restart {{ name }}

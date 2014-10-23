@@ -1,0 +1,10 @@
+---
+- name: create {{ name }}
+  template: src={{ name }} dest=/etc/systemd/system/{{ name }}
+  notify:
+    - reload systemd
+    - restart service
+
+- name: enable {{ name }}
+  shell: /usr/bin/systemctl enable {{ name }}
+  when: name | search("\.service$")

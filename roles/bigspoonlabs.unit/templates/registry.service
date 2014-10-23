@@ -1,0 +1,14 @@
+[Unit]
+Description=Private Docker Registry
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker rm -f registry
+ExecStartPre=/usr/bin/docker pull pallet/registry-swift
+ExecStart=/usr/bin/docker run --name registry -h registry.%H -e SETTINGS_FLAVOR=swift -e OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/ -e OS_CONTAINER=registry -e OS_USERNAME={{ os_username }} -e OS_PASSWORD={{ os_password }} -e OS_TENANT_NAME={{ os_tenant_name }} -e OS_REGION_NAME=IAD -e SEARCH_BACKEND=sqlalchemy -e GUNICORN_OPTS=[--preload] -p 5000:5000 pallet/registry-swift
+ExecStop=/usr/bin/docker stop registry
+
+[Install]
+WantedBy=multi-user.target

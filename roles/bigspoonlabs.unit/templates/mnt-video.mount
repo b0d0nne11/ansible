@@ -1,0 +1,8 @@
+[Unit]
+After=network.target
+
+[Mount]
+What=share.b0d0nne11.local:/volume1/video
+Where=/mnt/video
+Type=nfs4
+Options=intr,hard,timeo=15,rsize=8192,wsize=8192

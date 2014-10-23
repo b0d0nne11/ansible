@@ -1,0 +1,17 @@
+[Unit]
+Description=Plex Media Server
+After=docker.service
+Requires=docker.service
+After=mnt-video.mount mnt-music.mount
+Wants=mnt-video.mount mnt-music.mount
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/mkdir -p '/srv/plex/Library/Application Support'
+ExecStartPre=-/usr/bin/docker rm -f plex
+ExecStartPre=/usr/bin/docker pull registry.b0d0nne11.local:5000/b0d0nne11/plex
+ExecStart=/usr/bin/docker run --name plex -h plex.%H -p 32400:32400 -v /mnt/video:/mnt/video -v /mnt/music:/mnt/music -v /srv/plex/Library:/var/lib/plexmediaserver/Library registry.b0d0nne11.local:5000/b0d0nne11/plex /start.sh
+ExecStop=/usr/bin/docker stop plex
+
+[Install]
+WantedBy=multi-user.target
