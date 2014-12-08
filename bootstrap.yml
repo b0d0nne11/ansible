@@ -3,4 +3,7 @@
   gather_facts: false
   roles:
     - defunctzombie.coreos-bootstrap
+- hosts: coreos
+  sudo: true
+  roles:
     - bigspoonlabs.bootstrap

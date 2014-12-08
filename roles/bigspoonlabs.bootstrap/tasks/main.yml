@@ -1,3 +1,6 @@
 ---
 - name: Install docker-py
   pip: name=docker-py
+
+- name: Setup network interface
+  template: src=00-static.network dest=/etc/systemd/network/00-static.network
